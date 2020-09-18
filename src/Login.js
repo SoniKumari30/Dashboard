@@ -1,70 +1,69 @@
-import React from 'react'
-import validator from 'validator'
-import axios from 'axios'
-import {withRouter} from 'react-router-dom'
+import React from "react"
+import axios from "axios"
+import {Redirect} from 'react-router-dom'
 
-class Login extends React.Component{
-
-    constructor(){
+class Login extends React.Component 
+{
+    constructor() 
+    {
         super()
-        this.state = {
-            email:'',
-            errMsg: ''
+        this.state=
+        {
+            email: "",
+            users:[]
         }
     }
 
-    handleChange=(e)=> {
-      const email = e.target.value  
-      this.setState({email})
-        
+    handleChange=(e)=> 
+    {
+        this.setState({[e.target.name]:e.target.value})
     }
 
-    handleSubmit = (e) => {
+    handleSubmit=(e)=> 
+    {
         e.preventDefault()
-        if(validator.isEmail(this.state.email)){
-            axios.get('https://jsonplaceholder.typicode.com/users')
-        .then((response) => {
-            const user = response.data.find(ele => ele.email === this.state.email)
-           if(user){
-               const userId=user.id
-               localStorage.setItem('login', 'true')
-               localStorage.setItem('id', userId)
-               this.props.history.push('/dashboard')
-           }
-             else{
-                 const errMsg = 'Email does not exists'
-                 this.setState({errMsg})
-             }
-           
-            })
-        }
-        else{
-            const errMsg = 'invalid email format'
-            this.setState({errMsg})
-        }
-            
-    }  
-  render(){
-      
+        axios.get("https://jsonplaceholder.typicode.com/users")
+        .then(response => 
+        {
+            const users=response.data.find(ele => ele.email == this.state.email)
+            if(users) 
+            {
+                localStorage.setItem("storedId", users.id)
+                this.setState({ users })
+            } 
+            else 
+            {
+                alert("Email is not registered")
+                this.setState({email: ''})
+            } 
+        })
+    }
+    render()
+    {
+        console.log(this.state)
         return (
             <div>
-                    
-                    <h1>LOGIN</h1>
-                    <form onSubmit={this.handleSubmit}>
-                    <input 
-                    type='text'
-                    value={this.state.email}
-                    onChange={this.handleChange}
-                    placeholder='enter your email'/>
-                    <br />
-                     <input 
-                     type="submit" />
-                    </form>
-                    <p>{this.state.errMsg}</p>
-                    
-                </div>
-            
+                {
+                    localStorage.length != 0 ? (<Redirect to={`/userProfile/${localStorage.getItem("storedId")}`} />) : 
+                    (
+                        <div>
+                            <h2>Login</h2>
+                            <form onSubmit={this.handleSubmit}>
+                                <input
+                                    type="email"
+                                    id="email"
+                                    name="email"
+                                    value={this.state.email}
+                                    onChange={this.handleChange}
+                                    placeholder="enter email and press enter"
+                                />
+                            </form>
+                        </div>
+                    ) 
+                }
+            </div>
         )
     }
 }
-export default withRouter (Login)
+
+export default Login
