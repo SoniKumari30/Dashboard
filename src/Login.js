@@ -1,7 +1,7 @@
 import React from 'react'
 import validator from 'validator'
 import axios from 'axios'
-import {withRouter} from 'react-router-dom'
+//import {withRouter} from 'react-router-dom'
 
 class Login extends React.Component{
 
