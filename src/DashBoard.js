@@ -1,6 +1,6 @@
 import React from 'react'
 import axios from 'axios'
-//import { Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 
 
 class UserShow extends React.Component {
