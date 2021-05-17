@@ -6,7 +6,7 @@ class UserProfile extends React.Component{
     constructor()
     {
         super()
-        this.state=
+        this.state=//
         {
             user:[],
             posts:[],
