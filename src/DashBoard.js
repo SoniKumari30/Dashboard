@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom'
 
 class UserProfile extends React.Component{
     constructor()
-    {
+    {//
         super()
         this.state=
         {
