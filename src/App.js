@@ -5,7 +5,7 @@ import UserShow from './DashBoard'
 
 function App () {
     return (
-        <BrowserRouter>//
+        <BrowserRouter>
         
         <div>
             <Route path="/" component={LoginForm} exact={true} />
